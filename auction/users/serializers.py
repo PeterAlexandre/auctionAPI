@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import User, Address
 
 
-class AddressSerializer(serializers.ModelSerializer):
+class AddressSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Address
         fields = [
@@ -16,6 +16,7 @@ class AddressSerializer(serializers.ModelSerializer):
             "state",
             "postal_code",
             "country",
+            "user",
         ]
 
 
@@ -25,7 +26,6 @@ class PublicAddressField(serializers.RelatedField):
 
 
 class UserSerializer(serializers.ModelSerializer):
-    # address = PublicAddressField(read_only=True)
     address = AddressSerializer(read_only=True)
 
     class Meta:

@@ -8,10 +8,6 @@ from .models import User, Address
 from .serializers import UserSerializer, ChangePasswordSerializer, AddressSerializer
 
 
-# testar no postman todos os endpoints e esquema de permissões
-# Fazer listagem pública de usuários
-
-
 class UserViewSet(MixedPermissionModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
