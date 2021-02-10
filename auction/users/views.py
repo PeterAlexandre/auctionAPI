@@ -2,10 +2,10 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from auction.utils.views import MixedPermissionModelViewSet
-from auction.utils.permissions import IsStaff, IsSelfUserOrIsStaff
+from auction.utils.permissions import IsStaff, IsSelfUserOrIsStaff, IsOwnerOrIsStaff
 
 from .models import User, Address
-from .serializers import UserSerializer, ChangePasswordSerializer, AddressSerializer
+from .serializers import UserSerializer, PublicUserSerializer, ChangePasswordSerializer, AddressSerializer
 
 
 class UserViewSet(MixedPermissionModelViewSet):
@@ -14,13 +14,20 @@ class UserViewSet(MixedPermissionModelViewSet):
     # add filterset fields
 
     permission_classes_by_action = {
-        "list": [IsStaff],
+        "list": [],
         "retrieve": [IsSelfUserOrIsStaff],
         "create": [IsStaff],
         "update": [IsSelfUserOrIsStaff],
         "partial_update": [IsSelfUserOrIsStaff],
         "destroy": [IsSelfUserOrIsStaff],
     }
+
+    def get_serializer_class(self):
+        if self.action == "list" and not self.request.user.is_staff:
+            # raise Exception(PublicUserSerializer.Meta.fields)
+            self.serializer_class = PublicUserSerializer
+
+        return self.serializer_class
 
     @action(methods=["PATCH"], detail=True, permission_classes=[IsSelfUserOrIsStaff])
     def change_password(self, request, pk=None):
@@ -49,7 +56,7 @@ class AddressViewSet(MixedPermissionModelViewSet):
 
     permission_classes_by_action = {
         "list": [IsStaff],
-        "retrieve": [IsStaff],
+        "retrieve": [IsOwnerOrIsStaff],
         "create": [IsStaff],
         "update": [IsSelfUserOrIsStaff],
         "partial_update": [IsSelfUserOrIsStaff],
