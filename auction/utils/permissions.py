@@ -1,11 +1,6 @@
 from rest_framework.permissions import BasePermission
 
 
-class IsStaff(BasePermission):
-    def has_permission(self, request, view) -> bool:
-        return request.user.is_staff
-
-
 class IsSelfUserOrIsStaff(BasePermission):
     def check_object_permission(self, user, obj):
         return (user.is_staff or obj == user)
