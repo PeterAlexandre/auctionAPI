@@ -25,7 +25,6 @@ class Address(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name="address",
-        related_query_name="address",
         blank=True,
         null=True
     )

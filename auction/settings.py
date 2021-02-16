@@ -26,16 +26,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-]
 
-# Application libs
-INSTALLED_APPS += [
+    # libs
     'rest_framework',
     'rest_framework.authtoken',
-]
 
-# Auction apps
-INSTALLED_APPS += [
+    # apps
     'auction.users',
     'auction.core',
 ]
