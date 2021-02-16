@@ -34,6 +34,12 @@ INSTALLED_APPS += [
     'rest_framework.authtoken',
 ]
 
+# Auction apps
+INSTALLED_APPS += [
+    'auction.users',
+    'auction.core',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -91,6 +97,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Custom User model
+AUTH_USER_MODEL = "users.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
